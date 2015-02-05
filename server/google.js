@@ -1,7 +1,7 @@
 var Future = Npm.require('fibers/future');
 var GmailBatch = Meteor.npmRequire('node-gmail-api');
 var base64url = Meteor.npmRequire('base64-url');
-
+var sprintf = Meteor.npmRequire("sprintf-js").sprintf;
 
 var lyftQuery = "from:receipts@lyftmail.com OR from:no-reply@lyftmail.com";
 var defaultMax = 100;
@@ -75,6 +75,9 @@ var textRegexQueries = [{
     query: /ride ending (.*)/i
   },{
     field: 'time3',
+    query: /ride completed on (.*)/i
+  },{
+    field: 'time4',
     query: /line ending (.*)/i
   },{
     field: 'pickup',
@@ -89,8 +92,7 @@ var textRegexQueries = [{
         query: /total charged to (.*)/i,
       }, {
         query: /\$?\-?([1-9]{1}[0-9]{0,2}(\,\d{3})*(\.\d{0,2})?|[1-9]{1}\d{0,}(\.\d{0,2})?|0(\.\d{0,2})?|(\.\d{1,2}))$|^\-?\$?([1-9]{1}\d{0,2}(\,\d{3})*(\.\d{0,2})?|[1-9]{1}\d{0,}(\.\d{0,2})?|0(\.\d{0,2})?|(\.\d{1,2}))$|^\(\$?([1-9]{1}\d{0,2}(\,\d{3})*(\.\d{0,2})?|[1-9]{1}\d{0,}(\.\d{0,2})?|0(\.\d{0,2})?|(\.\d{1,2}))\)$/,
-      }
-    ]
+      }]
   },{
     field: 'total2',
     queries: [{
@@ -99,8 +101,11 @@ var textRegexQueries = [{
         query: /(\$\w+)/i, matchType: 0
       },{
         query: /\$?\-?([1-9]{1}[0-9]{0,2}(\,\d{3})*(\.\d{0,2})?|[1-9]{1}\d{0,}(\.\d{0,2})?|0(\.\d{0,2})?|(\.\d{1,2}))$|^\-?\$?([1-9]{1}\d{0,2}(\,\d{3})*(\.\d{0,2})?|[1-9]{1}\d{0,}(\.\d{0,2})?|0(\.\d{0,2})?|(\.\d{1,2}))$|^\(\$?([1-9]{1}\d{0,2}(\,\d{3})*(\.\d{0,2})?|[1-9]{1}\d{0,}(\.\d{0,2})?|0(\.\d{0,2})?|(\.\d{1,2}))\)$/,
-      }
-    ]
+      }]
+  },{
+    field: 'totalString',
+    query: /total charged to (.*):/i,
+    matchType: 0
   }];
 
 // queries for html data from message
@@ -113,7 +118,14 @@ var htmlRegexQueries = [{
 // parse the message data to get the values you care about
 function buildLyftReceipt(message){
 
-  return _.extend(buildResults(message.text, textRegexQueries), buildResults(message.html, htmlRegexQueries), {messageDate: message.date});
+  var receipt = _.extend(buildResults(message.text, textRegexQueries), buildResults(message.html, htmlRegexQueries), {messageDate: message.date});
+  
+  // if you still didn't parse the time, use the message date as the ride time and convert to Lyft style
+  if(!receipt.time){
+    var m = moment(message.date);
+    receipt.time = sprintf("%s at %s",m.format("MMMM D"), m.format("h:mm A"));
+  }
+  return receipt;
 
   function buildResults(messageData, queries){
     var results = {};
@@ -144,7 +156,7 @@ function buildLyftReceipt(message){
     });
 
     // try both ways of getting the time from the data
-    var times = _.compact([results.time, results.time2, results.time3]);
+    var times = _.compact([results.time, results.time2, results.time3, results.time4]);
     if(times.length){
       results.time = _.first(times);
     }
