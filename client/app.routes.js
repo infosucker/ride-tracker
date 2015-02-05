@@ -1,11 +1,11 @@
 angular.module("app").run(function($rootScope, $state) {
 
   $rootScope.$on('$stateChangeError', function(event, toState, toParams, fromState, fromParams, error){ 
-    console.log(event);
-    console.log(toState);
-    console.log(toParams);
-    console.log(fromState);
-    console.log(fromParams);
+    // console.log(event);
+    // console.log(toState);
+    // console.log(toParams);
+    // console.log(fromState);
+    // console.log(fromParams);
     console.log(error);
 
     if(error.status === 401){
@@ -14,6 +14,16 @@ angular.module("app").run(function($rootScope, $state) {
       $state.go('404');
     }
   });
+
+  $rootScope.logout = function(){
+    if($rootScope.currentUser){
+      Meteor.logout(function(error){
+        if(error){
+          console.log(error);
+        }
+      });
+    }
+  };
 });
 
 angular.module("app").config(['$urlRouterProvider', '$stateProvider', '$locationProvider',
@@ -34,7 +44,11 @@ angular.module("app").config(['$urlRouterProvider', '$stateProvider', '$location
       })
       .state('404', {
         url: '/404',
-        template: "<div>404</div>",
+        template: "<div class='row'>" + 
+                    "<h1 class='col-xs-12 text-center'>404</h1>" +
+                    "<h3 class='col-xs-12 text-center text-uppercase'>Page Not Found</h3>" +
+                    "<h4 class='col-xs-12 text-center text-uppercase'>Sorry, but the page you were trying to view does not exist.</h4>" +
+                  "</div>",
       });
 
     $urlRouterProvider.otherwise("/404");
