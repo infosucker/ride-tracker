@@ -56,6 +56,10 @@ function refreshOAuthToken(service, user){
 }
 
 
+// filter non-receipt messages
+var messageFilters = /(thanks for getting)/i;
+
+
 // queries for text data from message
 var textRegexQueries = [{
     field: 'driver',
@@ -103,6 +107,16 @@ var textRegexQueries = [{
         query: /\$?\-?([1-9]{1}[0-9]{0,2}(\,\d{3})*(\.\d{0,2})?|[1-9]{1}\d{0,}(\.\d{0,2})?|0(\.\d{0,2})?|(\.\d{1,2}))$|^\-?\$?([1-9]{1}\d{0,2}(\,\d{3})*(\.\d{0,2})?|[1-9]{1}\d{0,}(\.\d{0,2})?|0(\.\d{0,2})?|(\.\d{1,2}))$|^\(\$?([1-9]{1}\d{0,2}(\,\d{3})*(\.\d{0,2})?|[1-9]{1}\d{0,}(\.\d{0,2})?|0(\.\d{0,2})?|(\.\d{1,2}))\)$/,
       }]
   },{
+  field: 'cancelled',
+    queries: [{
+        query: /charges to (.*)/i,
+      },{
+        query: /(\$\w+)/i, matchType: 0
+      },{
+        query: /\$?\-?([1-9]{1}[0-9]{0,2}(\,\d{3})*(\.\d{0,2})?|[1-9]{1}\d{0,}(\.\d{0,2})?|0(\.\d{0,2})?|(\.\d{1,2}))$|^\-?\$?([1-9]{1}\d{0,2}(\,\d{3})*(\.\d{0,2})?|[1-9]{1}\d{0,}(\.\d{0,2})?|0(\.\d{0,2})?|(\.\d{1,2}))$|^\(\$?([1-9]{1}\d{0,2}(\,\d{3})*(\.\d{0,2})?|[1-9]{1}\d{0,}(\.\d{0,2})?|0(\.\d{0,2})?|(\.\d{1,2}))\)$/,
+        matchType: 1
+      }]
+  },{
     field: 'totalString',
     query: /total charged to (.*):/i,
     matchType: 0
@@ -123,9 +137,24 @@ function buildLyftReceipt(message){
   // if you still didn't parse the time, use the message date as the ride time and convert to Lyft style
   if(!receipt.time){
     var m = moment(message.date);
-    receipt.time = sprintf("%s at %s",m.format("MMMM D"), m.format("h:mm A"));
+    receipt.time = m.format("MMMM D");
   }
+
+  // log for debugging
+  if(!receipt.pickup || !receipt.dropoff){
+    console.log("missing pickup or dropoff: ", message.text);
+  }
+
+  if(!receipt.total && !receipt.cancelled){
+    console.log("missing total: ", message.text);
+  }
+
+  if(!receipt.driver){
+    console.log("missing driver: ", message.text);
+  }
+
   return receipt;
+
 
   function buildResults(messageData, queries){
     var results = {};
@@ -138,13 +167,10 @@ function buildLyftReceipt(message){
       if(result){
         if(regex.queries){
           _.each(regex.queries, function(q){
+            // if you get a match, update the result, otherwise the result is null
             try{
               result = q.query.exec(result)[(!!q.matchType)? q.matchType: 1];
             }catch(e){
-              console.log('error parsing query', e);
-              console.log('current result during parse', result);
-              console.log('current query', q);
-              console.log(messageData);
               result = null;
             }
           });
@@ -165,6 +191,10 @@ function buildLyftReceipt(message){
     var totals = _.compact([results.total, results.total2]);
     if(totals.length){
       results.total = _.first(totals);
+    }else{
+      if(results.cancelled){
+        results.total = results.cancelled;
+      }
     }
 
     return results;
@@ -250,8 +280,10 @@ Meteor.methods({
 
     // when you receive message data, decode it and push to the messageText array
     messageStream.on('data', Meteor.bindEnvironment(function (d) {
-      var message = decodeMessage(d);
-      messageArray.push(message);
+      if(!messageFilters.exec(d.snippet)){
+        var message = decodeMessage(d);
+        messageArray.push(message);
+      }
     }));
 
 

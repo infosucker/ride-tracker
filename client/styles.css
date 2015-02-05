@@ -287,6 +287,10 @@ textarea {
   margin-right: auto;
 }
 
+.danger {
+  color: #d9534f
+}
+
 .detail-element{
   max-width: 320px;
 }

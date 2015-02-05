@@ -6,7 +6,7 @@
       <div class="panel-body">
         <hr/>
         <p class="col-xs-9 text-left"><b class="text-uppercase">{{receipt.totalString? receipt.totalString: "Total: "}}</b></p>
-        <p class="col-xs-3 text-right"><b class="text-uppercase">{{(receipt.total | currency) || "???"}}<b></p>
+        <p class="col-xs-3 text-right"><b class="text-uppercase">{{(receipt.total | currency) || "???"}}</b></p>
       </div>
     </div>
   </div>
@@ -14,7 +14,7 @@
     <div class="row">
       <div class="col-xs-12">
         <h3 class="text-center text-uppercase">Ride</h3>
-        <img class="receipt-photo center" ng-src="{{isOpen && receipt.map}}"/>
+        <img ng-show="receipt.pickup && receipt.dropoff" class="receipt-photo center" ng-src="{{isOpen && receipt.map}}"/>
       </div>
     </div>
     <br />

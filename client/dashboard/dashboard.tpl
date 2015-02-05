@@ -63,7 +63,7 @@
     <br />
 
     <div class="row text-center" ng-show="dashboardctrl.receipts && dashboardctrl.receipts.length">
-      <h1 class="col-xs-11 col-xs-offset-1 text-left text-uppercase">Total Rides: {{dashboardctrl.receipts.length}} <small ng-show="dashboardctrl.receipts.length === 100"> (showing the last 100 rides in your inbox, if you crave more <a href="mailto:simon@glipcode.com?Subject=We%20Want%20More!" target="_blank">email me!</a>)</small></h1>
+      <h1 class="col-xs-11 col-xs-offset-1 text-left text-uppercase">Total Rides: {{dashboardctrl.receipts.length}} <small ng-show="dashboardctrl.receipts.length >= 80"> (showing the last {{dashboardctrl.receipts.length}} rides in your inbox, if you crave more <a href="mailto:simon@glipcode.com?Subject=We%20Want%20More!" target="_blank">email me!</a>)</small></h1>
 
       <h1 class="col-xs-11 col-xs-offset-1 text-left text-uppercase">Total Spent: {{dashboardctrl.totalSpent | currency}}</h1>
     </div>
@@ -81,7 +81,7 @@
         <accordion close-others="oneAtATime">
           <accordion-group ng-repeat="receipt in dashboardctrl.receipts" is-open="status.open">
             <accordion-heading>
-              {{receipt.total? (receipt.total | currency) : "$???"}} -- {{receipt.time? receipt.time : "???"}}
+              {{receipt.total? (receipt.total | currency) : "$???"}} -- {{receipt.time? receipt.time : "???"}} <span ng-show="receipt.cancelled" class="danger">(cancelled)</span>
               <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
             </accordion-heading>
             <receipt receipt-data="{{receipt}}" is-open="{{status.open}}"></receipt>

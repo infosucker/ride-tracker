@@ -119,7 +119,6 @@
         case "Spending":
           data = vm.chartTotal(vm.receipts, 'total', delimiter);
           data.pointFormat = "${point.y:.2f}";
-          console.log(data);
           break;
         case "Distance":
           data = vm.chartTotal(vm.receipts, 'distance', delimiter);
@@ -140,7 +139,6 @@
       vm.loading = true;
       vm.completed = false;
       $meteorMethods.call("gmail").then(function(response){
-        console.log(response);
 
         vm.receipts = response;
         
