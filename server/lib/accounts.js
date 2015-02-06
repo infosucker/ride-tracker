@@ -6,5 +6,6 @@ ServiceConfiguration.configurations.insert({
   service: "google",
   clientId: Meteor.settings.google.client_id,
   secret: Meteor.settings.google.client_secret,
-  loginStyle: "redirect"
+  loginStyle: "redirect",
+  requestOfflineToken: true,
 });

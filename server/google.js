@@ -152,9 +152,9 @@ function buildLyftReceipt(message){
     console.log("missing driver: ", message.text);
   }
 
-  if(!receipt.receipt){
-    console.log("missing receipt no", message.text);
-  }
+  // if(!receipt.receipt){
+  //   console.log("missing receipt no", message.text);
+  // }
 
   return receipt;
 

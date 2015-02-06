@@ -5,7 +5,7 @@
   
   <div class="row text-center">
     <div class="col-xs-12">
-      <div class="btn btn-primary text-uppercase" ng-show="!dashboardctrl.currentUser || (!dashboardctrl.receipts && !dashboardctrl.loading && !dashboardctrl.completed)" ng-disabled="dashboardctrl.isLoggingIn || dashboardctrl.loading" ng-click="dashboardctrl.gmailButtonClick()"><img src="/assets/gmail-icon.png"/> Get Receipts from Gmail</div>
+      <div class="btn btn-primary text-uppercase" ng-show="!dashboardctrl.currentUser || (!dashboardctrl.receipts && !dashboardctrl.loading && !dashboardctrl.completed)" ng-disabled="dashboardctrl.isLoggingIn || dashboardctrl.loading" ng-click="dashboardctrl.gmailButtonClick()"><img src="/assets/gmail-icon.png"/>Get Receipts from Gmail</div>
     </div>
   </div>
 

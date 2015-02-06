@@ -176,9 +176,10 @@
 
     function loginWithGoogle(callback){
       Meteor.loginWithGoogle({
-        loginStyle: 'popup',
+        loginStyle: 'redirect',
         requestPermissions: 'https://www.googleapis.com/auth/gmail.readonly',
-        requestOfflineToken: true
+        requestOfflineToken: true,
+        forceApprovalPrompt: true
       }, callback);
     }
 
