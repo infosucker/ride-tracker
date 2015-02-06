@@ -1,7 +1,6 @@
 var Future = Npm.require('fibers/future');
 var GmailBatch = Meteor.npmRequire('node-gmail-api');
 var base64url = Meteor.npmRequire('base64-url');
-var sprintf = Meteor.npmRequire("sprintf-js").sprintf;
 
 var lyftQuery = "from:receipts@lyftmail.com OR from:no-reply@lyftmail.com";
 var defaultMax = 100;
@@ -151,6 +150,10 @@ function buildLyftReceipt(message){
 
   if(!receipt.driver){
     console.log("missing driver: ", message.text);
+  }
+
+  if(!receipt.receipt){
+    console.log("missing receipt no", message.text);
   }
 
   return receipt;

@@ -1,4 +1,4 @@
-angular.module("app").run(function($rootScope, $state) {
+angular.module("app").run(['$rootScope', '$state', function($rootScope, $state) {
 
   $rootScope.$on('$stateChangeError', function(event, toState, toParams, fromState, fromParams, error){ 
     // console.log(event);
@@ -24,7 +24,7 @@ angular.module("app").run(function($rootScope, $state) {
       });
     }
   };
-});
+}]);
 
 angular.module("app").config(['$urlRouterProvider', '$stateProvider', '$locationProvider',
   function($urlRouterProvider, $stateProvider, $locationProvider){
