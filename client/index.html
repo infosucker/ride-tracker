@@ -12,15 +12,6 @@
   <base href="/">
   <link href="//fonts.googleapis.com/css?family=Unica+One" rel="stylesheet" type="text/css">
   <script src="//code.highcharts.com/highcharts.js"></script>
-  <script type="text/javascript">
-    var _urq = _urq || [];
-    _urq.push(['initSite', '987356d5-2827-4eae-b3e6-f9dc715a7706']);
-    (function() {
-    var ur = document.createElement('script'); ur.type = 'text/javascript'; ur.async = true;
-    ur.src = ('https:' == document.location.protocol ? 'https://cdn.userreport.com/userreport.js' : 'http://cdn.userreport.com/userreport.js');
-    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ur, s);
-    })();
-  </script>
 </head>
 <body>
   <!--[if lt IE 8]>
@@ -67,6 +58,16 @@
       </div>
     </footer>
   </div>
+
+  <script type="text/javascript">
+    var _urq = _urq || [];
+    _urq.push(['initSite', '987356d5-2827-4eae-b3e6-f9dc715a7706']);
+    (function() {
+    var ur = document.createElement('script'); ur.type = 'text/javascript'; ur.async = true;
+    ur.src = ('https:' == document.location.protocol ? 'https://cdn.userreport.com/userreport.js' : '//cdn.userreport.com/userreport.js');
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ur, s);
+    })();
+  </script>
 
   <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
   <script>
