@@ -85,17 +85,6 @@ Schema.User = new SimpleSchema({
     blackbox: true
   },
 
-  commitments: {
-    type: [String],
-    optional: true
-  },
-
-  credit_card_id: {
-    type: Object,
-    optional: true,
-    blackbox: true
-  },
-
   timezone: {
     type: String,
     label: 'timezone name',

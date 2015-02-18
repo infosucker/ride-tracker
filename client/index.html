@@ -3,7 +3,7 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>Track My Lyfts</title>
-  <meta name="description" content="track lyft receipts">
+  <meta name="description" content="Check out this dashboard for your Lyft receipts!">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <link rel="apple-touch-icon" href="/lyft-shield.ico">
@@ -17,15 +17,18 @@
   <!--[if lt IE 8]>
     <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="//browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
   <![endif]-->
+
+  <div id="fb-root"></div>
+
   <div ng-app='app' ng-cloak ng-strict-di>
 
     <nav class="navbar navbar-default">
       <div class="container-fluid">
         <div class="navbar-header">
           <a class="navbar-brand" ui-sref="dashboard">
-            <img alt="Brand" src="/assets/lyft-shield.png" width="38px" height="40px">
+            <img alt="Brand" src="/assets/lyft-shield-revised.png" width="38px" height="40px">
           </a>
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" ng-click="revealCollapsed = !revealCollapsed">
+          <button ng-show="currentUser" type="button" class="navbar-toggle collapsed" data-toggle="collapse" ng-click="revealCollapsed = !revealCollapsed">
             <span class="sr-only">Toggle navigation</span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
@@ -33,7 +36,7 @@
           </button>
         </div>
         <div class="collapse navbar-collapse" collapse="!revealCollapsed" ng-show="currentUser">
-          <ul class="nav navbar-nav navbar-right">
+          <ul class="nav navbar-nav navbar-right" ng-show="currentUser">
             <li class="dropdown" dropdown on-toggle="toggled(open)">
               <a href class="dropdown-toggle" dropdown-toggle>
                 {{currentUser.profile.name}}
@@ -53,13 +56,13 @@
       <div class="container text-uppercase">
         <div class="row">
           <div class="col-xs-6 text-left text-muted"><a href="//glipcode.com" target="_blank">Glipcode</a>, Copyright © 2015</div>
-          <div class="col-xs-6 text-right text-muted">Made with <span class="glyphicon glyphicon-heart"></span> using <a href="//angularjs.meteor.com" target="_blank"><img src="/assets/meteor-angular-logo.png"/></a></div>
+          <div class="col-xs-6 text-right text-muted">Made with <span class="glyphicon glyphicon-heart"></span> using <a href="//angularjs.meteor.com" target="_blank"><img src="/assets/meteor-angular-logo-small.png"/></a></div>
         </div>
       </div>
     </footer>
   </div>
 
-  <script type="text/javascript">
+  <!-- <script type="text/javascript">
     var _urq = _urq || [];
     _urq.push(['initSite', '987356d5-2827-4eae-b3e6-f9dc715a7706']);
     (function() {
@@ -67,7 +70,7 @@
     ur.src = ('https:' == document.location.protocol ? 'https://cdn.userreport.com/userreport.js' : '//cdn.userreport.com/userreport.js');
     var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ur, s);
     })();
-  </script>
+  </script> -->
 
   <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
   <script>

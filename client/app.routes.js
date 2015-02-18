@@ -40,7 +40,11 @@ angular.module("app").config(['$urlRouterProvider', '$stateProvider', '$location
       })
       .state('unauthorized', {
         url: '/401',
-        templateUrl: 'client/error/views/401.tpl',
+        template: "<div class='row'>" + 
+                    "<h1 class='col-xs-12 text-center'>401</h1>" +
+                    "<h3 class='col-xs-12 text-center text-uppercase'>Unauthorized</h3>" +
+                    "<h4 class='col-xs-12 text-center text-uppercase'>Sorry, but you are not authorized to view that page.</h4>" +
+                  "</div>",
       })
       .state('404', {
         url: '/404',

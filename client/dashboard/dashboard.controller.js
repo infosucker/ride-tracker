@@ -16,6 +16,8 @@
     vm.chartTotal = chartTotal;
     vm.loginWithGoogle = loginWithGoogle;
     vm.refresh = refresh;
+    vm.tweet = "Check out this dashboard for your Lyft receipts!";
+    vm.facebookUrl = "//ridetracker.meteor.com/";
 
     vm.chartOptions = {};
 
