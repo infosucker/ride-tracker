@@ -1,12 +1,13 @@
 <div class="container">
   <div class="row text-center">
-    <div class="col-md-offset-4 col-md-2 col-xs-6" fb-like="dashboardctrl.facebookUrl"></div>
-    <div class="col-md-2 col-xs-6" tweet="dashboardctrl.tweet"></div>
+    <div class="col-md-offset-4 col-md-2 col-xs-6" ng-show="dashboardctrl.facebookUrl" fb-like="dashboardctrl.facebookUrl"></div>
+    <div class="col-md-2 col-xs-6" ng-show="dashboardctrl.tweet" tweet="dashboardctrl.tweet"></div>
   </div>
 
   <br />
 
   <h1 class="text-center text-uppercase">Track My Lyfts</h1>
+  <h4 class="text-center text-uppercase">your lyft receipts all in one place</h4>
   
   <br />
   

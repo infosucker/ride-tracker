@@ -141,20 +141,20 @@ function buildLyftReceipt(message){
 
   // log for debugging
   if(!receipt.pickup || !receipt.dropoff){
-    console.log("missing pickup or dropoff: ", message.text);
+    log.info("missing pickup or dropoff: ", message.text);
   }
 
   if(!receipt.total && !receipt.cancelled){
-    console.log("missing total: ", message.text);
+    log.info("missing total: ", message.text);
   }
 
   if(!receipt.driver){
-    console.log("missing driver: ", message.text);
+    log.info("missing driver: ", message.text);
   }
 
-  // if(!receipt.receipt){
-  //   console.log("missing receipt no", message.text);
-  // }
+  if(!receipt.receipt){
+    log.info("missing receipt no", message.text);
+  }
 
   return receipt;
 
@@ -172,7 +172,7 @@ function buildLyftReceipt(message){
           _.each(regex.queries, function(q){
             // if you get a match, update the result, otherwise the result is null
             try{
-              result = q.query.exec(result)[(!!q.matchType)? q.matchType: 1];
+              result = q.query.exec(result)[(!!q.matchType || q.matchType === 0)? q.matchType: 1];
             }catch(e){
               result = null;
             }
@@ -270,8 +270,6 @@ Meteor.methods({
           console.log(e);
         }
       }));
-
-      // console.log(text); // log the email text contents
 
       return {html: html, text: text, date: date};
     }

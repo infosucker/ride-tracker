@@ -1,9 +1,9 @@
 (function(){
   angular.module("app").controller("DashboardCtrl", DashboardCtrl);
 
-  DashboardCtrl.$inject = ['$meteorMethods', '$rootScope', '$scope', 'googleConstants', 'mapService', 'receiptService', 'utilityService'];
+  DashboardCtrl.$inject = ['$meteorMethods', '$rootScope', '$scope', 'googleConstants', 'mapService', 'matchmedia','receiptService', 'utilityService'];
 
-  function DashboardCtrl($meteorMethods, $rootScope, $scope, googleConstants, mapService, receiptService, utilityService){
+  function DashboardCtrl($meteorMethods, $rootScope, $scope, googleConstants, mapService, matchmedia, receiptService, utilityService){
     var vm = this;
     
     vm.dataTypes = ["Spending", "Rides"]; // add "Distance"
@@ -28,12 +28,22 @@
 
 
     function activate(){
-
       $scope.chartSettings = {
         dataType: _.first(vm.dataTypes),
         operator: _.last(vm.operators),
         split: _.first(vm.splits)
       };
+
+      // adjust x labels on graph based on screen size
+      matchmedia.onPhone(function(mediaQueryList){
+        if(mediaQueryList.matches){
+          $scope.chartSettings.maxXLabels = 5;
+        }
+      });
+      matchmedia.onDesktop(function(mediaQueryList){
+        if(mediaQueryList.matches)
+          $scope.chartSettings.maxXLabels = 10;
+      });
 
       $scope.$watch('chartSettings', function(chartSettings){
         if(vm.receipts && vm.receipts.length){
@@ -178,7 +188,7 @@
 
     function loginWithGoogle(callback){
       Meteor.loginWithGoogle({
-        loginStyle: 'redirect',
+        loginStyle: matchmedia.isDesktop()? 'popup' : 'redirect',
         requestPermissions: 'https://www.googleapis.com/auth/gmail.readonly',
         requestOfflineToken: true,
         forceApprovalPrompt: true
@@ -203,8 +213,6 @@
     }
 
     function setupChart(data){
-      var maxXLabels = 10;
-
       vm.chartOptions = {
         chart: {
           type: 'column',
@@ -219,7 +227,7 @@
         xAxis: {
           categories: data.xPoints,
           labels: {
-            step: Math.ceil(data.xPoints.length/maxXLabels),
+            step: Math.ceil(data.xPoints.length/$scope.chartSettings.maxXLabels),
             maxStaggerLines: 1,
           }
         },

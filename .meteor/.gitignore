@@ -1,2 +1,4 @@
 local
 settings.json
+dev.sh
+prod.sh
