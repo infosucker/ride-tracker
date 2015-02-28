@@ -23,3 +23,5 @@ mizzao:bootstrap-3
 jquery
 wylio:winston-papertrail
 meteorhacks:kadira
+audit-argument-checks
+browser-policy

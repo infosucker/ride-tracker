@@ -207,7 +207,6 @@ function buildLyftReceipt(message){
 
 Meteor.methods({ 
 
-
   // refresh googgle auth tokens if they expire
   refreshGoogleOAuthToken: function(){
     var loggedInUser = Meteor.user();
@@ -222,8 +221,13 @@ Meteor.methods({
 
   // get all lyft receipt emails from gmail
   gmail : function(query, max, retry){
+
     query = query? query:lyftQuery;
     max = max? max: defaultMax;
+
+    Match.test(query, Match.OneOf(String, null, undefined));
+    Match.test(max, Match.OneOf(Number, null, undefined));
+    Match.test(retry, Match.OneOf(Number, null, undefined));
     
     var loggedInUser = Meteor.user();
 

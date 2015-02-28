@@ -10,8 +10,17 @@
   <link rel="icon" href="/lyft-shield.ico">
 
   <base href="/">
+  
   <link href="//fonts.googleapis.com/css?family=Unica+One" rel="stylesheet" type="text/css">
+
   <script src="//code.highcharts.com/highcharts.js"></script>
+
+  <meta name="google-site-verification" content="KGxTlxImGo8MgkQkXjsEFvaN8LtRPggHkoKqRf4Rj9A" />
+
+  <meta name="twitter:widgets:csp" content="on">
+
+  <script type="text/javascript" src="//www.google-analytics.com/analytics.js"></script>
+  <script type="text/javascript" src="/ga.js"></script>
 </head>
 <body>
   <!--[if lt IE 8]>
@@ -20,7 +29,7 @@
 
   <div id="fb-root"></div>
 
-  <div ng-app='app' ng-cloak ng-strict-di>
+  <div ng-app='app' ng-csp ng-csp-data ng-cloak ng-strict-di>
 
     <nav class="navbar navbar-default">
       <div class="container-fluid">
@@ -61,25 +70,5 @@
       </div>
     </footer>
   </div>
-
-  <!-- <script type="text/javascript">
-    var _urq = _urq || [];
-    _urq.push(['initSite', '987356d5-2827-4eae-b3e6-f9dc715a7706']);
-    (function() {
-    var ur = document.createElement('script'); ur.type = 'text/javascript'; ur.async = true;
-    ur.src = ('https:' == document.location.protocol ? 'https://cdn.userreport.com/userreport.js' : '//cdn.userreport.com/userreport.js');
-    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ur, s);
-    })();
-  </script> -->
-
-  <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
-  <script>
-    (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
-    function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;
-    e=o.createElement(i);r=o.getElementsByTagName(i)[0];
-    e.src='//www.google-analytics.com/analytics.js';
-    r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));
-    ga('create','UA-58638457-2','auto');ga('send','pageview');
-  </script>
 
 </body>
