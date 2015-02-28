@@ -12,7 +12,7 @@ BrowserPolicy.content.allowConnectOrigin("https://*.meteor.com");
 BrowserPolicy.content.allowConnectOrigin("wss://*.meteor.com");
 
 // for angular to work womp
-//BrowserPolicy.content.allowEval();
+BrowserPolicy.content.allowEval();
 
 // for the script
 BrowserPolicy.content.allowScriptOrigin("*.google-analytics.com");
@@ -23,6 +23,12 @@ BrowserPolicy.content.allowImageOrigin("stats.g.doubleclick.net");
 
 // for highcharts
 BrowserPolicy.content.allowScriptOrigin("*.code.highcharts.com");
+
+// for google maps
+BrowserPolicy.content.allowImageOrigin("maps.googleapis.com");
+
+// for lyft images
+BrowserPolicy.content.allowImageOrigin("lyftapi.s3.amazonaws.com");
 
 // for facebook
 BrowserPolicy.content.allowScriptOrigin("*.connect.facebook.net");
