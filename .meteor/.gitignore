@@ -1,4 +1,4 @@
 local
-settings.json
+../settings.json
 dev.sh
 prod.sh
