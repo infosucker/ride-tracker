@@ -225,9 +225,9 @@ Meteor.methods({
     query = query? query:lyftQuery;
     max = max? max: defaultMax;
 
-    Match.test(query, Match.OneOf(String, null, undefined));
-    Match.test(max, Match.OneOf(Number, null, undefined));
-    Match.test(retry, Match.OneOf(Number, null, undefined));
+    check(query, Match.OneOf(String, null, undefined));
+    check(max, Match.OneOf(Number, null, undefined));
+    check(retry, Match.OneOf(Boolean, null, undefined));
     
     var loggedInUser = Meteor.user();
 
